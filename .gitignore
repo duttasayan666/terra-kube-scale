@@ -1,0 +1,7 @@
+*.terraform*
+*.ppk
+*.csv
+*.csv*
+*.log*
+*.out*
+*.hcl*
