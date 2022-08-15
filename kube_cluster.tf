@@ -9,7 +9,7 @@ resource "google_container_cluster" "primary" {
 }
 
 data "google_container_cluster" "primary" {
-  project = "mykubeproject-358518"
+  project  = "mykubeproject-358518"
   name     = "my-kube-cluster"
   location = "us-central1-c"
 }
@@ -22,12 +22,12 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   node_config {
     ##preemptible  = true
     machine_type = "e2-medium"
-    image_type = "COS_CONTAINERD"
+    image_type   = "COS_CONTAINERD"
     disk_size_gb = "60"
-    disk_type = "pd-standard"
+    disk_type    = "pd-standard"
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-    service_account =  "terraform-gcp-sa@mykubeproject-358518.iam.gserviceaccount.com"
-    oauth_scopes    = [
+    service_account = "terraform-gcp-sa@mykubeproject-358518.iam.gserviceaccount.com"
+    oauth_scopes = [
       ##"https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/devstorage.read_only",
       "https://www.googleapis.com/auth/logging.write",
@@ -41,9 +41,9 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
 
 resource "null_resource" "get-credentials" {
 
- depends_on = [google_container_cluster.primary]
- 
- provisioner "local-exec" {
-   command = "gcloud container clusters get-credentials ${google_container_cluster.primary.name} --zone=${google_container_cluster.primary.location}"
- }
+  depends_on = [google_container_cluster.primary]
+
+  provisioner "local-exec" {
+    command = "gcloud container clusters get-credentials ${google_container_cluster.primary.name} --zone=${google_container_cluster.primary.location}"
+  }
 }
